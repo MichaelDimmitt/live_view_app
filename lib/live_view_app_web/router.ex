@@ -1,5 +1,7 @@
 defmodule LiveViewAppWeb.Router do
   use LiveViewAppWeb, :router
+  import Phoenix.LiveView.Router
+    scope "/", AppWebWeb do
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -15,6 +17,7 @@ defmodule LiveViewAppWeb.Router do
 
   scope "/", LiveViewAppWeb do
     pipe_through :browser
+    live "/thermostat", ThermostatLive
 
     get "/", PageController, :index
   end

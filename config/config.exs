@@ -16,6 +16,7 @@ config :live_view_app, LiveViewAppWeb.Endpoint,
   secret_key_base: "de+ISNmc8XscF+5zcXg1vy7YsYyKLiR+sBQzZnldbd/vwmHcYEW3fDZsJHgMJVI3",
   render_errors: [view: LiveViewAppWeb.ErrorView, accepts: ~w(html json)],
   pubsub: [name: LiveViewApp.PubSub, adapter: Phoenix.PubSub.PG2]
+  live_view: [signing_salt: "YY4Rgzi/3wQyibRSck8N4NbctpIDi9kk"],
 
 # Configures Elixir's Logger
 config :logger, :console,
