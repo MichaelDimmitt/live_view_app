@@ -25,7 +25,7 @@ https://github.com/chrismccord/phoenix_live_view_example/
 ## Commands that need to be implemented one time.
 ```bash
 
-## step 0
+## step 1
 ## mix.exs
   defp deps do
     [
@@ -57,14 +57,6 @@ mix phx.gen.secret 32
  config :app_web, LiveViewWeb.Endpoint,
    live_view: [signing_salt: "sM/h9HbXVlCWtQ2B5f88DYjDtfO4630C" ],
 
-## step 3
-## assets/js/app.js
-import {Socket} from "phoenix"
-import LiveSocket from "phoenix_live_view"
-
-let liveSocket = new LiveSocket("/live", Socket)
-liveSocket.connect()
-
 ## step 4
 ## assets/package.json
     "phoenix_html": "file:../deps/phoenix_html",
@@ -79,9 +71,12 @@ liveSocket.connect()
 <%= csrf_meta_tag() %>
 </head>
 ## step 6 - related to (step 5)
-## Then in your app.js:
+## assets/js/app.js
+
+import {Socket} from "phoenix"
+import LiveSocket from "phoenix_live_view"
   let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content");
-  let liveSocket = new LiveSocket("/live", {params: {_csrf_token: csrfToken}});
+  let liveSocket = new LiveSocket("/live", Socket, {params: {_csrf_token: csrfToken}});
 ```
 ```bash
 Hookup a router based live view using 'live'.
