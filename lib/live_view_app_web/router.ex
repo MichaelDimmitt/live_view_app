@@ -1,7 +1,6 @@
 defmodule LiveViewAppWeb.Router do
   use LiveViewAppWeb, :router
   import Phoenix.LiveView.Router
-    scope "/", AppWebWeb do
 
   pipeline :browser do
     plug :accepts, ["html"]

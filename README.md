@@ -25,7 +25,7 @@ https://github.com/chrismccord/phoenix_live_view_example/
 ## Commands that need to be implemented one time.
 ```bash
 
-## step 0
+## step 1
 ## mix.exs
   defp deps do
     [
@@ -34,7 +34,7 @@ https://github.com/chrismccord/phoenix_live_view_example/
     ]
 
 ## step 2
-vi lib/app_web_web/endpoint.ex
+vi lib/live_view_app_web/endpoint.ex
 +  @session_options [
 +    store: :cookie,
 +    key: "_app_web_key",
@@ -54,16 +54,8 @@ vi lib/app_web_web/endpoint.ex
 ## generate a live view signing salt, different from phoenix signing salt.
 mix phx.gen.secret 32
 ## add live_view: [signing_salt: ...] to ... config/config.exs
- config :app_web, AppWebWeb.Endpoint,
+ config :app_web, LiveViewWeb.Endpoint,
    live_view: [signing_salt: "sM/h9HbXVlCWtQ2B5f88DYjDtfO4630C" ],
-
-## step 3
-## assets/js/app.js
-import {Socket} from "phoenix"
-import LiveSocket from "phoenix_live_view"
-
-let liveSocket = new LiveSocket("/live", Socket)
-liveSocket.connect()
 
 ## step 4
 ## assets/package.json
@@ -74,20 +66,23 @@ liveSocket.connect()
 ## step 5
 ## You should define the CSRF meta tag inside the in <head> in your layout:
 ## <%= csrf_meta_tag() %>
-## lib/app_web_web/templates/layout/app.html.eex
+## lib/live_view_app_web/templates/layout/app.html.eex
 <head>
 <%= csrf_meta_tag() %>
 </head>
 ## step 6 - related to (step 5)
-## Then in your app.js:
+## assets/js/app.js
+
+import {Socket} from "phoenix"
+import LiveSocket from "phoenix_live_view"
   let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content");
-  let liveSocket = new LiveSocket("/live", {params: {_csrf_token: csrfToken}});
+  let liveSocket = new LiveSocket("/live", Socket, {params: {_csrf_token: csrfToken}});
 ```
 ```bash
 Hookup a router based live view using 'live'.
-1) lib/app_web_web/router.ex:
+1) lib/live_view_app_web/router.ex:
      import Phoenix.LiveView.Router
-     scope "/", AppWebWeb do
+     scope "/", LiveViewWeb do
      ...
        live "/thermostat", ThermostatLive
 
